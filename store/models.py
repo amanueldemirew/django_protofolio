@@ -55,6 +55,12 @@ class Customer(models.Model):
         max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE
     )
 
+    def __str__(self) -> str:
+        return f'{self.first_name} {self.last_name}'
+    
+    class Meta:
+        ordering = ['first_name', 'last_name']
+
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDEING = "P"
@@ -70,7 +76,7 @@ class Order(models.Model):
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDEING
     )
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
+    
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
